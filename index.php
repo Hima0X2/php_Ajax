@@ -122,17 +122,78 @@
             right: -15px;
             cursor: pointer;
         }
+        .search-container {
+    margin-top: 20px;
+    text-align: center;
+}
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.button-container button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-container button:hover {
+    background-color: #0056b3;
+}
+
+.input-container {
+    margin-top: 20px;
+}
+
+.input-container input {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: calc(100% - 22px); /* Adjust width to include padding and border */
+}
+.search-container input[type=text] {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: calc(60% - 22px); /* Adjust width to include padding and border */
+}
+
+/* .search-container button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: calc(40% - 22px); /* Adjust width to include padding and border */
+}
+
+.search-container button:hover {
+    background-color: #0056b3;
+} */
     </style>
 </head>
 <body>
     <div class="container">
         <h1>PHP with AJAX</h1>
-        <button id="button_click">Load Data</button>
+        <div class="search-container">
+            <input type="text" id="search_input" placeholder="Search...">
+            <!-- <button id="search_button">Search</button> -->
+        </div>
         <div class="input-container">
             <input type="text" id="username_input" placeholder="Enter Username">
             <input type="email" id="email_input" placeholder="Enter Email">
             <input type="text" id="password_input" placeholder="Enter Password">
+            </div>
+            <div class="button-container">
             <button id="insertData">Insert Data</button>
+            <button id="button_click">Load Data</button>
         </div>
         <table id="data-table">
             <thead>
@@ -246,7 +307,6 @@
         $(document).on("click", ".update-btn", function(){
     $("#modal").show();
     var username = $(this).closest("tr").find("td:first").text();
-
     $.ajax({
         url: "ajax-load-updated-form.php",
         type: "POST",
@@ -256,12 +316,12 @@
         }
     });
 });
-        // Hide Modal Box
-        $(document).on("click", "#close-btn", function(){
-            $("#modal").hide();
-        });
-        //Save Update Form
-        $(document).on("click", "#edit-submit", function(){
+// Hide Modal Box
+$(document).on("click", "#close-btn", function(){
+    $("#modal").hide();
+});
+//Save Update Form
+$(document).on("click", "#edit-submit", function(){
     var username = $("#edit-username").val();
     var email = $("#edit-fname").val();
     var pass = $("#edit-lname").val();
@@ -281,8 +341,19 @@
         }
     });
 });
-
-    });
+//live search 
+$("#search_input").on("keyup", function(){
+                var search = $(this).val();
+                $.ajax({
+                    url: "search.php",
+                    type: "POST",
+                    data: { search: search },
+                    success: function(data) {
+                        $("#data-table").html(data);
+                    }
+                });
+            });
+});
 </script>
 </body>
 </html>
