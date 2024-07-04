@@ -43,7 +43,7 @@ Download jqury.js from https://jquery.com/
 
 5. **Access the application:**
 
-   Open your web browser and go to http://localhost/ajax%20and%20php/ to access the application.
+   Open your web browser and go to http://192.168.159.1/ajax%20and%20php/ to access the application. 
 
 ## Contributing
 
